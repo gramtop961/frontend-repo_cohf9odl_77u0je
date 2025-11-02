@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Mail, Home, User } from "lucide-react";
+import { motion } from "framer-motion";
 
 export default function WaitlistForm() {
   const [status, setStatus] = useState(null);
@@ -8,7 +9,7 @@ export default function WaitlistForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // No backend call yet; simulate success UX
+    // Simulate success UX for now.
     setTimeout(() => {
       setLoading(false);
       setStatus({ type: "success", message: "You're on the waitlist! We'll be in touch shortly." });
@@ -20,7 +21,12 @@ export default function WaitlistForm() {
     <section id="waitlist" className="relative">
       <div className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid items-center gap-10 lg:grid-cols-2">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="font-geist text-3xl font-semibold text-gray-900 sm:text-4xl">
               Be a founding host
             </h2>
@@ -32,9 +38,15 @@ export default function WaitlistForm() {
               <li className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-rose-500" /> Smart pricing setup session</li>
               <li className="flex items-center gap-2"><span className="h-2 w-2 rounded-full bg-sky-500" /> Priority support channel</li>
             </ul>
-          </div>
+          </motion.div>
 
-          <div className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.98, y: 10 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.6 }}
+            className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm"
+          >
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="mb-1 block text-sm font-medium text-gray-700">Full name</label>
@@ -108,7 +120,7 @@ export default function WaitlistForm() {
                 </p>
               )}
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>

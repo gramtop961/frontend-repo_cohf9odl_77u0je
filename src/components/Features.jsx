@@ -1,4 +1,5 @@
 import { Shield, Users, Star, MapPin } from "lucide-react";
+import { motion } from "framer-motion";
 
 const features = [
   {
@@ -27,6 +28,19 @@ const features = [
   },
 ];
 
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 16 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
 export default function Features() {
   return (
     <section className="relative border-t border-gray-200 bg-white">
@@ -40,9 +54,16 @@ export default function Features() {
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.2 }}
+          className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+        >
           {features.map(({ title, desc, icon: Icon, color }) => (
-            <div
+            <motion.div
+              variants={item}
               key={title}
               className="group rounded-2xl border border-gray-200 bg-white p-6 shadow-sm transition hover:shadow-md"
             >
@@ -51,9 +72,9 @@ export default function Features() {
               </div>
               <h3 className="mt-4 text-lg font-semibold text-gray-900">{title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">{desc}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

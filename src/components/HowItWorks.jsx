@@ -1,4 +1,5 @@
 import { CheckCircle2, Calendar, Wallet } from "lucide-react";
+import { motion } from "framer-motion";
 
 const steps = [
   {
@@ -18,6 +19,19 @@ const steps = [
   },
 ];
 
+const container = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.1, delayChildren: 0.1 },
+  },
+};
+
+const item = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: "easeOut" } },
+};
+
 export default function HowItWorks() {
   return (
     <section className="relative bg-gradient-to-b from-white to-rose-50/60">
@@ -31,9 +45,16 @@ export default function HowItWorks() {
           </p>
         </div>
 
-        <ol className="mt-12 grid gap-6 sm:grid-cols-3">
+        <motion.ol
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.3 }}
+          className="mt-12 grid gap-6 sm:grid-cols-3"
+        >
           {steps.map(({ title, desc, icon: Icon }, idx) => (
-            <li
+            <motion.li
+              variants={item}
               key={title}
               className="relative rounded-2xl border border-gray-200 bg-white p-6 text-center shadow-sm"
             >
@@ -44,9 +65,9 @@ export default function HowItWorks() {
                 {idx + 1}. {title}
               </h3>
               <p className="mt-2 text-sm leading-relaxed text-gray-600">{desc}</p>
-            </li>
+            </motion.li>
           ))}
-        </ol>
+        </motion.ol>
       </div>
     </section>
   );
